@@ -31,16 +31,33 @@
         width: 15px;
         height: 15px;
       }
+      
+      #drop-zone {
+        width: 200px;
+        padding: 50px;
+        text-align: center;
+        border: solid 1px #333;
+        color: #333;
+      }
+      
+      #drop-zone.dragover {
+        background-color: #111;
+      }
     </style>
   </head>
   <body>
     <input type="file" name="image" id="image">
+    <div id="drop-zone">
+      Drop image here
+    </div>
     <div id="output"></div>
     
     <script src="text-from-image.js"></script>
     <script>
       fileInput = document.querySelector('#image');
       fileInput.addEventListener('change', function(event) {
+        console.log('file selected');
+        
         var reader = new FileReader();
 
         reader.addEventListener('load', function(event) {
@@ -49,6 +66,29 @@
         
         reader.readAsDataURL(event.target.files[0]);
       });
+      
+      dropZone = document.querySelector('#drop-zone');
+      
+      dropZone.addEventListener('dragover', function(event) {
+        event.stopPropagation();
+        event.preventDefault();
+        event.dataTransfer.dropEffect = 'copy';
+        
+        dropZone.className = 'dragover';
+      }, false);
+      
+      dropZone.addEventListener('drop', function(event) {
+        event.stopPropagation();
+        event.preventDefault();
+        
+        var reader = new FileReader();
+
+        reader.addEventListener('load', function(event) {
+          new TextFromImage(event.target.result, 100);
+        });
+        
+        reader.readAsDataURL(event.dataTransfer.files[0]);
+      }, false);
     </script>
   </body>
 </html>
