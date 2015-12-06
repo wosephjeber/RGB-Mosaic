@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="/css/style.css">
   </head>
   <body class="no-scroll">
+    <div id="overlay">
+      <div class="progress-bar">
+        <div class="progress"></div>
+      </div>
+    </div>
+    <div id="output"></div>
     <div id="panel" class="padded">
       <div class="align-center">
         <div id="drop-zone">
@@ -17,11 +23,14 @@
         </div>
       </div>
     </div>
-    <div id="output"></div>
     
     <script src="js/text-from-image.js"></script>
     <script>
       var panel = document.querySelector('#panel');
+      var overlay = document.querySelector('#overlay');
+      
+      var progressBar = new ProgressBar();
+      
       new DropZone('#drop-zone', function(event) {
         var reader = new FileReader();
 
@@ -45,6 +54,22 @@
       function showPanel() {
         panel.classList.remove('hide');
         document.querySelector('body').classList.add('no-scroll');
+      }
+      
+      function fadeOut(element, time) {
+        element.style.opacity = 0;
+        element.style.transitionDuration = time + 'ms';
+        setTimeout(function() {
+          element.style.display = 'none';
+        }, time);
+      };
+      
+      function fadeIn(element, time) {
+        element.style.display = null;
+        element.style.transitionDuration = time + 'ms';
+        setTimeout(function() {
+          element.style.opacity = 100;
+        }, 1);
       }
       
     </script>

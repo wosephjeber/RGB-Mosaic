@@ -1,4 +1,6 @@
 var TextFromImage = function(source, width) {
+  progressBar.show();
+  
   resizeImage(source, width, function(source) {
     var canvas = document.createElement('canvas');
     var image = new Image();
@@ -6,6 +8,7 @@ var TextFromImage = function(source, width) {
     console.log('loading image');
     
     image.addEventListener('load', function() {
+      progressBar.add(40);
       console.log('image loaded');
       canvas.width = image.naturalWidth;
       canvas.height = image.naturalHeight;
@@ -22,7 +25,8 @@ var TextFromImage = function(source, width) {
   
   function drawPixels(pixels, lineWidth) {
     var data = pixels.data;
-    console.log('drawing ' + (pixels.data.length / 4) + ' pixels');
+    var pixelQuantity = pixels.data.length / 4;
+    console.log('drawing ' + pixelQuantity + ' pixels');
     var outputDiv = document.querySelector('#output');
     outputDiv.style.display = 'none';
     outputDiv.innerHTML = '';
@@ -51,10 +55,14 @@ var TextFromImage = function(source, width) {
       pixel.appendChild(bDiv);
       
       outputDiv.appendChild(pixel);
+      
+      progressBar.add( ( (i / 4) / pixelQuantity ) * 20 );
     }
-    document.querySelector('body').classList.add('image-rendered');
+    
+    outputDiv.style.display = 'block';
+    
     setTimeout(function() {
-      outputDiv.style.display = 'block';
+      fadeOut(overlay, 500);
     }, 500);
   }
   
@@ -63,6 +71,7 @@ var TextFromImage = function(source, width) {
     var image = new Image();
     
     image.addEventListener('load', function() {
+      progressBar.add(40);
       var naturalHeight = image.naturalHeight;
       var naturalWidth = image.naturalWidth;
       var newHeight = width * (naturalHeight / naturalWidth);
@@ -117,4 +126,34 @@ var DropZone = function(selector, callback) {
   input.addEventListener('change', function(event) {
     callback.call(_this, event);
   });
+};
+
+var ProgressBar = function() {
+  var _this = this;
+  var element = document.querySelector('.progress-bar');
+  var bar = element.querySelector('.progress');
+  
+  this.percent = 0;
+  
+  this.show = function() {
+    element.classList.add('show');
+  };
+  
+  this.hide = function() {
+    element.classList.remove('show');
+  };
+  
+  this.to = function(percent) {
+    _this.percent = percent;
+    update();
+  };
+  
+  this.add = function(percent) {
+    _this.percent += percent;
+    update();
+  };
+  
+  function update() {
+    bar.style.width = _this.percent + '%';
+  }
 };
