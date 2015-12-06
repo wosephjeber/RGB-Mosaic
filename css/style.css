@@ -1,0 +1,130 @@
+/*****************/
+/**** General ****/
+/*****************/
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #222;
+  font-family: 'Open Sans', Helvetica, sans-serif;
+  transition: background-color .5s;
+}
+
+h1:first-child,
+h2:first-child,
+h3:first-child,
+h4:first-child,
+h5:first-child,
+h6:first-child {
+  margin-top: 0;
+}
+
+p {
+  margin-bottom: 1em;
+  font-family: 'Merriweather', serif;
+}
+
+p:first-child {
+  margin-top: 0;
+}
+
+/*******************/
+/**** Framework ****/
+/*******************/
+
+.padded {
+  padding: 40px;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.clear {
+  clear: both;
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+body.image-rendered {
+  background-color: #000;
+}
+
+/***************/
+/**** Intro ****/
+/***************/
+
+#panel {
+  background-color: #fff;
+  color: #555;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-transition: left .5s;
+  transition: left .5s;
+}
+
+#panel.hide {
+  left: -300px;
+}
+
+/******************/
+/**** Artboard ****/
+/******************/
+
+.pixel {
+  float: left;
+  font-family: monospace;
+  text-align: center;
+  font-size: 5px;
+  font-weight: bold;
+  line-height: 5px;
+  width: 15px;
+  height: 15px;
+}
+
+/******************/
+/**** Dropzone ****/
+/******************/
+
+#drop-zone {
+  display: inline-block;
+  padding: 50px;
+  text-align: center;
+  border: solid 2px #ddd;
+  color: #555;
+  outline: dotted 2px #ddd;
+  outline-offset: -10px;
+  -webkit-transition: border-color .5s, outline-color .5s;
+  transition: border-color .5s, outline-color .5s;
+}
+
+#drop-zone.dragover {
+  border-color: #2ec97b;
+  outline-color: #2ec97b;
+}
+
+#drop-zone input[type="file"] {
+  position: absolute;
+  left: -10000px;
+}
+
+label.btn {
+  background-color: #2ec97b;
+  color: #fff;
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}

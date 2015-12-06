@@ -24,6 +24,7 @@ var TextFromImage = function(source, width) {
     var data = pixels.data;
     console.log('drawing ' + (pixels.data.length / 4) + ' pixels');
     var outputDiv = document.querySelector('#output');
+    outputDiv.style.display = 'none';
     outputDiv.innerHTML = '';
     outputDiv.style.width = lineWidth * 15 + 'px';
     for (var i = 0; i < data.length; i += 4) {
@@ -51,6 +52,10 @@ var TextFromImage = function(source, width) {
       
       outputDiv.appendChild(pixel);
     }
+    document.querySelector('body').classList.add('image-rendered');
+    setTimeout(function() {
+      outputDiv.style.display = 'block';
+    }, 500);
   }
   
   function resizeImage(source, width, callback) {
@@ -79,4 +84,37 @@ var TextFromImage = function(source, width) {
     
     image.src = source;
   }
+};
+
+var DropZone = function(selector, callback) {
+  _this = this;
+  
+  var element = document.querySelector(selector);
+  var input = element.querySelector('input[type="file"]');
+  
+  element.addEventListener('dragover', function(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'copy';
+    
+    element.className = 'dragover';
+  }, false);
+  
+  element.addEventListener('dragleave', function(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    
+    element.className = '';
+  });
+  
+  element.addEventListener('drop', function(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    
+    callback.call(_this, event);
+  }, false);
+  
+  input.addEventListener('change', function(event) {
+    callback.call(_this, event);
+  });
 };

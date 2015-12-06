@@ -4,91 +4,49 @@
     <meta charset="utf-8">
     <title>Canvas Images</title>
     
-    <style>
-      body {
-        background-color: #000;
-      }
-      
-      .padded {
-        padding: 40px;
-      }
-      
-      .align-center {
-        text-align: center;
-      }
-      
-      .clear {
-        clear: both;
-      }
-      
-      .pixel {
-        float: left;
-        font-family: monospace;
-        text-align: center;
-        font-size: 5px;
-        font-weight: bold;
-        line-height: 5px;
-        width: 15px;
-        height: 15px;
-      }
-      
-      #drop-zone {
-        width: 200px;
-        padding: 50px;
-        text-align: center;
-        border: solid 1px #333;
-        color: #333;
-      }
-      
-      #drop-zone.dragover {
-        background-color: #111;
-      }
-    </style>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:300|Open+Sans:400,600' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/css/style.css">
   </head>
-  <body>
-    <input type="file" name="image" id="image">
-    <div id="drop-zone">
-      Drop image here
+  <body class="no-scroll">
+    <div id="panel" class="padded">
+      <div class="align-center">
+        <div id="drop-zone">
+          <p>Drop image here or select file below</p>
+          <input type="file" name="image" id="image">
+          <label for="image" class="btn">Select file</label>
+        </div>
+      </div>
     </div>
     <div id="output"></div>
     
-    <script src="text-from-image.js"></script>
+    <script src="js/text-from-image.js"></script>
     <script>
-      fileInput = document.querySelector('#image');
-      fileInput.addEventListener('change', function(event) {
-        console.log('file selected');
-        
+      var panel = document.querySelector('#panel');
+      new DropZone('#drop-zone', function(event) {
         var reader = new FileReader();
 
         reader.addEventListener('load', function(event) {
-          new TextFromImage(event.target.result, 100);
+          hidePanel();
+          setTimeout(function() {
+            new TextFromImage(event.target.result, 100);
+          }, 500);
         });
         
-        reader.readAsDataURL(event.target.files[0]);
+        var file = event.dataTransfer ? event.dataTransfer.files[0] : event.target.files[0];
+        
+        reader.readAsDataURL(file);
       });
       
-      dropZone = document.querySelector('#drop-zone');
+      function hidePanel() {
+        panel.classList.add('hide');
+        document.querySelector('body').classList.remove('no-scroll');
+      }
       
-      dropZone.addEventListener('dragover', function(event) {
-        event.stopPropagation();
-        event.preventDefault();
-        event.dataTransfer.dropEffect = 'copy';
-        
-        dropZone.className = 'dragover';
-      }, false);
+      function showPanel() {
+        panel.classList.remove('hide');
+        document.querySelector('body').classList.add('no-scroll');
+      }
       
-      dropZone.addEventListener('drop', function(event) {
-        event.stopPropagation();
-        event.preventDefault();
-        
-        var reader = new FileReader();
-
-        reader.addEventListener('load', function(event) {
-          new TextFromImage(event.target.result, 100);
-        });
-        
-        reader.readAsDataURL(event.dataTransfer.files[0]);
-      }, false);
     </script>
   </body>
 </html>
