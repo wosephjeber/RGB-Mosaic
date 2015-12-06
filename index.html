@@ -33,12 +33,20 @@
       
       new DropZone('#drop-zone', function(event) {
         var reader = new FileReader();
-
+        progressBar.show();
+        
         reader.addEventListener('load', function(event) {
           hidePanel();
+          
+          progressBar.to(20);
+          
           setTimeout(function() {
             new TextFromImage(event.target.result, 100);
           }, 500);
+        });
+        
+        reader.addEventListener('progress', function(event) {
+          progressBar.to( ( event.loaded / event.total ) * 20 );
         });
         
         var file = event.dataTransfer ? event.dataTransfer.files[0] : event.target.files[0];

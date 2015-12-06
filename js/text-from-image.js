@@ -1,6 +1,4 @@
 var TextFromImage = function(source, width) {
-  progressBar.show();
-  
   resizeImage(source, width, function(source) {
     var canvas = document.createElement('canvas');
     var image = new Image();
@@ -8,7 +6,7 @@ var TextFromImage = function(source, width) {
     console.log('loading image');
     
     image.addEventListener('load', function() {
-      progressBar.add(40);
+      progressBar.add(30);
       console.log('image loaded');
       canvas.width = image.naturalWidth;
       canvas.height = image.naturalHeight;
@@ -71,7 +69,7 @@ var TextFromImage = function(source, width) {
     var image = new Image();
     
     image.addEventListener('load', function() {
-      progressBar.add(40);
+      progressBar.add(30);
       var naturalHeight = image.naturalHeight;
       var naturalWidth = image.naturalWidth;
       var newHeight = width * (naturalHeight / naturalWidth);
