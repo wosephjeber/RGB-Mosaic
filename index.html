@@ -21,6 +21,17 @@
           <input type="file" name="image" id="image">
           <label for="image" class="btn">Select file</label>
         </div>
+        <div class="samples">
+          <div class="sample-image">
+            <img src="images/obama-2.jpg" alt="" />
+          </div>
+          <div class="sample-image">
+            <img src="images/hope.jpg" alt="" />
+          </div>
+          <div class="sample-image">
+            <img src="images/alpaca.jpg" alt="" />
+          </div>
+        </div>
       </div>
     </div>
     
@@ -49,7 +60,25 @@
           progressBar.to( ( event.loaded / event.total ) * 20 );
         });
         
-        var file = event.dataTransfer ? event.dataTransfer.files[0] : event.target.files[0];
+        var file;
+        if (event.dataTransfer) {
+          if (event.dataTransfer.files.length > 0) {
+            file = event.dataTransfer.files[0]
+          } else {
+            hidePanel();
+            progressBar.to(20);
+            
+            file = event.dataTransfer.getData('URL');
+            
+            setTimeout(function() {
+              new TextFromImage(file, 100);
+            }, 500)
+            
+            return;
+          }
+        } else {
+          file = event.target.files[0];
+        }
         
         reader.readAsDataURL(file);
       });
