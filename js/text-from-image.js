@@ -43,10 +43,10 @@ var TextFromImage = function(source, width) {
       rDiv.style.color = 'rgb(' + data[i] + ', 0, 0)';
       var gDiv = document.createElement('div');
       gDiv.innerHTML = data[i + 1];
-      gDiv.style.color = 'rgb(0,' + data[i] + ', 0)';
+      gDiv.style.color = 'rgb(0,' + data[i + 1] + ', 0)';
       var bDiv = document.createElement('div');
       bDiv.innerHTML = data[i + 2];
-      bDiv.style.color = 'rgb(0, 0, ' + data[i] + ')';
+      bDiv.style.color = 'rgb(0, 0, ' + data[i + 2] + ')';
       
       pixel.appendChild(rDiv);
       pixel.appendChild(gDiv);
