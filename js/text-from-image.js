@@ -28,7 +28,7 @@ var TextFromImage = function(source, width) {
     var outputDiv = document.querySelector('#output');
     outputDiv.style.display = 'none';
     outputDiv.innerHTML = '';
-    outputDiv.style.width = lineWidth * 15 + 'px';
+    outputDiv.style.width = (3 * lineWidth) + 'em';
     for (var i = 0; i < data.length; i += 4) {
       if ((i / 4) % lineWidth === 0 ) {
         var linebreak = document.createElement('div');

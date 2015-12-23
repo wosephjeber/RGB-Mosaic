@@ -91,15 +91,19 @@ body.no-scroll {
 /**** Artboard ****/
 /******************/
 
+#output {
+  font-size: 5px;
+}
+
 .pixel {
   float: left;
   font-family: monospace;
   text-align: center;
-  font-size: 5px;
+  font-size: 1em;
   font-weight: bold;
-  line-height: 5px;
-  width: 15px;
-  height: 15px;
+  line-height: 1;
+  width: 3em;
+  height: 3em;
 }
 
 /******************/
