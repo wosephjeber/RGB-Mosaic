@@ -2,26 +2,51 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Canvas Images</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>RGB Mosaic</title>
+    <meta name="description" content="Exposing the RGB color model behind your digital images.">
     
     <link href='https://fonts.googleapis.com/css?family=Merriweather:300|Open+Sans:400,600' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/nouislider.min.css">
   </head>
   <body class="no-scroll">
+    <!-- <div id="welcome" class="vertical-center centered">
+      <div class="padded centered">
+        
+        <div class="align-center">
+          <button type="button" class="btn">Click to start</button>
+        </div>
+      </div>
+    </div> -->
     <div id="overlay">
       <div class="progress-bar">
         <div class="progress"></div>
       </div>
     </div>
     <div id="output"></div>
-    <div id="panel" class="padded">
-      <div class="align-center">
+    <div id="controls">
+      <div id="fontsize"></div>
+      <input type="text" value="5" id="fontsize-display">
+      <button type="button" id="show-panel">Change image</button>
+    </div>
+    <div id="panel">
+      <div class="align-center padded">
+        <h1 class="align-center">RGB Mosaic <small>Exposing the RGB color model behind your digital images</small></h1>
+        <div class="align-center">
+          <button type="button" class="btn green" id="start-btn">Click to start</button>
+        </div>
+        <p class="align-center">
+          or
+        </p>
         <div id="drop-zone">
           <p>Drop image here or select file below</p>
           <input type="file" name="image" id="image">
           <label for="image" class="btn">Select file</label>
         </div>
-        <div class="samples">
+        <!-- <div class="samples">
           <div class="sample-image">
             <img src="images/obama-2.jpg" alt="" />
           </div>
@@ -31,14 +56,46 @@
           <div class="sample-image">
             <img src="images/alpaca.jpg" alt="" />
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     
+    <script src="js/nouislider.min.js"></script>
     <script src="js/text-from-image.js"></script>
     <script>
       var panel = document.querySelector('#panel');
       var overlay = document.querySelector('#overlay');
+      var slider = document.querySelector('#fontsize');
+      var output = document.querySelector('#output');
+      var startBtn = document.querySelector('#start-btn');
+      var fontsize = document.querySelector('#fontsize-display');
+      var showPanelButton = document.querySelector('#show-panel');
+      var currentImage = null;
+      
+      noUiSlider.create(slider, {
+        start: 5,
+        range: {
+          min: 5,
+          max: 15
+        }
+      });
+      
+      slider.noUiSlider.on('update', function(values, handle) {
+        fontsize.value = Math.round(values[handle]);
+      });
+      
+      slider.noUiSlider.on('change', function(values, handle) {
+        output.style.fontSize = Math.round(values[handle]) + 'px';
+      });
+      
+      showPanelButton.addEventListener('click', function(event) {
+        showPanel();
+      });
+      
+      startBtn.addEventListener('click', function(event) {
+        progressBar.show();
+        processImage('images/obama-2.jpg');
+      });
       
       var progressBar = new ProgressBar();
       
@@ -47,13 +104,7 @@
         progressBar.show();
         
         reader.addEventListener('load', function(event) {
-          hidePanel();
-          
-          progressBar.to(20);
-          
-          setTimeout(function() {
-            new TextFromImage(event.target.result, 100);
-          }, 500);
+          processImage(event.target.result);
         });
         
         reader.addEventListener('progress', function(event) {
@@ -65,14 +116,7 @@
           if (event.dataTransfer.files.length > 0) {
             file = event.dataTransfer.files[0]
           } else {
-            hidePanel();
-            progressBar.to(20);
-            
-            file = event.dataTransfer.getData('URL');
-            
-            setTimeout(function() {
-              new TextFromImage(file, 100);
-            }, 500)
+            processImage(event.dataTransfer.getData('URL'));
             
             return;
           }
@@ -82,6 +126,17 @@
         
         reader.readAsDataURL(file);
       });
+      
+      function processImage(image) {
+        hidePanel();
+        fadeIn(overlay, 500);
+        
+        progressBar.to(20);
+        
+        setTimeout(function() {
+          new TextFromImage(image, 100);
+        }, 500);
+      }
       
       function hidePanel() {
         panel.classList.add('hide');
