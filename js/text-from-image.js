@@ -54,12 +54,13 @@ var TextFromImage = function(source, width) {
       
       outputDiv.appendChild(pixel);
       
-      progressBar.add( ( (i / 4) / pixelQuantity ) * 20 );
+      if ((i / 4 / pixelQuantity) % 0.25 === 0 ) {
+        progressBar.add(0.25 * 20);
+      }
     }
     
-    outputDiv.style.display = 'block';
-    
     setTimeout(function() {
+      outputDiv.style.display = 'block';
       fadeOut(overlay, 500);
     }, 500);
   }
@@ -152,6 +153,7 @@ var ProgressBar = function() {
   };
   
   function update() {
+    console.log('Progress: ' + _this.percent);
     bar.style.width = _this.percent + '%';
   }
 };
