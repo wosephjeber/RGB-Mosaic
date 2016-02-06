@@ -12,43 +12,38 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/nouislider.min.css">
   </head>
-  <body class="no-scroll">
-    <!-- <div id="welcome" class="vertical-center centered">
-      <div class="padded centered">
-        
-        <div class="align-center">
-          <button type="button" class="btn">Click to start</button>
-        </div>
-      </div>
-    </div> -->
+  <body>
     <div id="overlay">
       <div class="progress-bar">
         <div class="progress"></div>
       </div>
     </div>
     <div id="output"></div>
-    <div id="controls-btn">
-      
-    </div>
-    <div id="controls">
-      <div id="fontsize"></div>
-      <input type="text" value="5" id="fontsize-display">
-      <button type="button" id="show-panel">Change image</button>
-    </div>
-    <div id="panel">
-      <div class="align-center padded">
-        <h1 class="align-center">RGB Mosaic <small>Exposing the RGB color model behind your digital images</small></h1>
-        <div class="align-center">
-          <button type="button" class="btn green" id="start-btn">Click to start</button>
-        </div>
-        <p class="align-center">
-          or
-        </p>
+    <div id="controls" class="hide">
+      <div class="panel-heading">
+        <h3 class="align-center">Controls</h3>
+      </div>
+      <div class="padded">
+        <h4>Adjust text size</h4>
+        <div id="fontsize"></div>
+        <input type="text" value="5" id="fontsize-display">
+        
+        <h4>Use your own image</h4>
         <div id="drop-zone">
           <p>Drop image here or select file below</p>
           <input type="file" name="image" id="image">
           <label for="image" class="btn">Select file</label>
         </div>
+      </div>
+    </div>
+    <div id="control-btn"></div>
+    <div id="panel" class="show">
+      <div class="align-center padded">
+        <h1 class="align-center">RGB Mosaic <small>Exposing the RGB color model behind your digital images</small></h1>
+        <div class="align-center">
+          <button type="button" class="btn green" id="start-btn">Click to start</button>
+        </div>
+        
         <!-- <div class="samples">
           <div class="sample-image">
             <img src="images/obama-2.jpg" alt="" />
@@ -70,10 +65,12 @@
       var overlay = document.querySelector('#overlay');
       var slider = document.querySelector('#fontsize');
       var output = document.querySelector('#output');
+      var controlPanel = document.querySelector('#controls');
       var startBtn = document.querySelector('#start-btn');
+      var controlBtn = document.querySelector('#control-btn');
       var fontsize = document.querySelector('#fontsize-display');
-      var showPanelButton = document.querySelector('#show-panel');
       var currentImage = null;
+      var transitionEvent = detectTransitionEvent();
       
       noUiSlider.create(slider, {
         start: 5,
@@ -91,14 +88,18 @@
         output.style.fontSize = Math.round(values[handle]) + 'px';
       });
       
-      showPanelButton.addEventListener('click', function(event) {
-        showPanel();
-      });
-      
       startBtn.addEventListener('click', function(event) {
         progressBar.show();
         processImage('images/obama-2.jpg');
       });
+      
+      controlBtn.addEventListener('click', function(event) {
+        if (controlPanel.classList.contains('hide')) {
+          showPanel(controlPanel);
+        } else {
+          hidePanel(controlPanel);
+        }
+      })
       
       var progressBar = new ProgressBar();
       
@@ -131,7 +132,7 @@
       });
       
       function processImage(image) {
-        hidePanel();
+        hidePanel(panel);
         fadeIn(overlay, 500);
         
         progressBar.to(20);
@@ -141,14 +142,20 @@
         }, 500);
       }
       
-      function hidePanel() {
-        panel.classList.add('hide');
-        document.querySelector('body').classList.remove('no-scroll');
+      function showPanel(element) {
+        element.classList.remove('hide');
+        setTimeout(function() {
+          element.classList.add('show');
+        }, 100);
       }
       
-      function showPanel() {
-        panel.classList.remove('hide');
-        document.querySelector('body').classList.add('no-scroll');
+      function hidePanel(element) {
+        element.classList.remove('show');
+        function transitionEndHandler(event) {
+          element.classList.add('hide');
+          element.removeEventListener(transitionEvent, transitionEndHandler);
+        };
+        element.addEventListener(transitionEvent, transitionEndHandler);
       }
       
       function fadeOut(element, time) {
@@ -157,7 +164,7 @@
         setTimeout(function() {
           element.style.display = 'none';
         }, time);
-      };
+      }
       
       function fadeIn(element, time) {
         element.style.display = null;
@@ -166,6 +173,25 @@
           element.style.opacity = 100;
         }, 1);
       }
+      
+      // detects browser-specific transitionend event name
+      function detectTransitionEvent(){
+        var t;
+        var el = document.createElement('testelement');
+        var transitions = {
+          'transition': 'transitionend',
+          'OTransition': 'oTransitionEnd',
+          'MozTransition': 'transitionend',
+          'WebkitTransition': 'webkitTransitionEnd'
+        };
+
+        for (t in transitions) {
+          if( el.style[t] !== undefined ){
+              return transitions[t];
+          }
+        }
+      }
+      
       
     </script>
   </body>
