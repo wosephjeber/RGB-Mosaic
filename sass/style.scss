@@ -55,6 +55,10 @@ h1 small {
   font-size: .5em;
 }
 
+a {
+  color: inherit;
+}
+
 /*******************/
 /**** Framework ****/
 /*******************/
@@ -148,7 +152,7 @@ body.no-scroll {
 /**** Panel ****/
 /***************/
 
-#panel {
+#welcome {
   background-color: #fff;
   color: #555;
   position: fixed;
@@ -164,23 +168,34 @@ body.no-scroll {
   z-index: 1;
   -webkit-transition: top .5s;
   transition: top .5s;
+  
+  .credit {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 40px;
+    font-size: .875em;
+    color: #676564;
+    background-color: #333;
+  }
 }
 
-#panel.hide {
+#welcome.hide {
   display: none;
 }
 
-#panel.show {
+#welcome.show {
   top: 0;
 }
 
-#panel .sample-image {
+#welcome .sample-image {
   width: 20%;
   float: left;
   padding: 10px;
 }
 
-#panel .sample-image img {
+#welcome .sample-image img {
   display: block;
   width: 100%;
   height: auto;
@@ -284,9 +299,26 @@ body.no-scroll {
   right: 0;
 }
 
-#fontsize {
-  width: 200px;
-  display: inline-block;
+#slider-wrapper {
+  position: relative;
+  
+  #slider {
+    padding-right: 60px;
+  }
+  
+  #fontsize {
+    width: 100%;
+  }
+  
+  #fontsize-display {
+    width: 40px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-weight: bold;
+    line-height: 18px;
+    text-align: right;
+  }
 }
 
 .panel-heading {
