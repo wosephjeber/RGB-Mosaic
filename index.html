@@ -18,7 +18,7 @@
         <div class="progress"></div>
       </div>
     </div>
-    <div id="output"></div>
+    <div id="mosaic"></div>
     <div id="controls" class="hide">
       <div class="panel-heading">
         <h3 class="align-center">Controls</h3>
@@ -29,11 +29,17 @@
         <input type="text" value="5" id="fontsize-display">
         
         <h4>Use your own image</h4>
-        <div id="drop-zone">
+        <div id="drop-zone" class="m-b-2">
           <p>Drop image here or select file below</p>
           <input type="file" name="image" id="image">
           <label for="image" class="btn">Select file</label>
         </div>
+        <small>
+          <strong>Note:</strong> Not every image works well with this type of
+          mosaic. Images with high contrast between light and dark values and
+          few details work best. Closely-cropped portraits with the subject
+          against a dark background are ideal.
+        </small>
       </div>
     </div>
     <div id="control-btn"></div>
@@ -64,7 +70,7 @@
       var panel = document.querySelector('#panel');
       var overlay = document.querySelector('#overlay');
       var slider = document.querySelector('#fontsize');
-      var output = document.querySelector('#output');
+      var mosaic = document.querySelector('#mosaic');
       var controlPanel = document.querySelector('#controls');
       var startBtn = document.querySelector('#start-btn');
       var controlBtn = document.querySelector('#control-btn');
@@ -73,7 +79,7 @@
       var transitionEvent = detectTransitionEvent();
       
       noUiSlider.create(slider, {
-        start: 5,
+        start: 7,
         range: {
           min: 5,
           max: 15
@@ -85,7 +91,7 @@
       });
       
       slider.noUiSlider.on('change', function(values, handle) {
-        output.style.fontSize = Math.round(values[handle]) + 'px';
+        mosaic.style.fontSize = Math.round(values[handle]) + 'px';
       });
       
       startBtn.addEventListener('click', function(event) {
@@ -105,6 +111,7 @@
       
       new DropZone('#drop-zone', function(event) {
         var reader = new FileReader();
+        hidePanel(controlPanel);
         progressBar.show();
         
         reader.addEventListener('load', function(event) {

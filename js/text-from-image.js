@@ -25,15 +25,15 @@ var TextFromImage = function(source, width) {
     var data = pixels.data;
     var pixelQuantity = pixels.data.length / 4;
     console.log('drawing ' + pixelQuantity + ' pixels');
-    var outputDiv = document.querySelector('#output');
-    outputDiv.style.display = 'none';
-    outputDiv.innerHTML = '';
-    outputDiv.style.width = (3 * lineWidth) + 'em';
+    var mosaicDiv = document.querySelector('#mosaic');
+    mosaicDiv.style.display = 'none';
+    mosaicDiv.innerHTML = '';
+    mosaicDiv.style.width = (3 * lineWidth) + 'em';
     for (var i = 0; i < data.length; i += 4) {
       if ((i / 4) % lineWidth === 0 ) {
         var linebreak = document.createElement('div');
         linebreak.className = 'clear';
-        outputDiv.appendChild(linebreak);
+        mosaicDiv.appendChild(linebreak);
       }
       var pixel = document.createElement('div');
       pixel.className = 'pixel';
@@ -52,7 +52,7 @@ var TextFromImage = function(source, width) {
       pixel.appendChild(gDiv);
       pixel.appendChild(bDiv);
       
-      outputDiv.appendChild(pixel);
+      mosaicDiv.appendChild(pixel);
       
       if ((i / 4 / pixelQuantity) % 0.25 === 0 ) {
         progressBar.add(0.25 * 20);
@@ -60,7 +60,7 @@ var TextFromImage = function(source, width) {
     }
     
     setTimeout(function() {
-      outputDiv.style.display = 'block';
+      mosaicDiv.style.display = 'block';
       fadeOut(overlay, 500);
     }, 500);
   }
