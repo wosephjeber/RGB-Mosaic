@@ -19,34 +19,65 @@
       </div>
     </div>
     <div id="mosaic"></div>
-    <div id="controls" class="hide">
-      <div class="panel-heading">
-        <h3 class="align-center">Controls</h3>
+    <div id="panels" class="hide">
+      <div id="info" class="panel hide">
+        <div class="panel-heading">
+          <h3 class="align-center">Introduction</h3>
+        </div>
+        <div class="padded">
+          <h4>What is this?</h4>
+          <p>
+            What you're seeing is a digital image converted into a mosiac
+            made up of the RGB values for each pixel. Each color value is
+            displayed at its designated intensity.
+          </p>
+          <p>
+            Scroll through the mosaic to the left, and step away from your screen
+            to see the red, green, and blue text start to resolve into distinc color
+            of each pixel.
+          </p>
+          <p>
+            This mosaic works best on a larger screen (the bigger the better),
+            but hopefully you can still get a sense for it on smaller screens.
+          </p>
+          <p>
+            Play with the settings to adjust the text size of each pixel, and
+            upload your own photo to see how it looks as an RGB mosaic.
+          </p>
+        </div>
       </div>
-      <div class="padded">
-        <h4>Adjust text size</h4>
-        <div id="slider-wrapper">
-          <div id="slider">
-            <div id="fontsize"></div>
+      <div id="controls" class="panel hide">
+        <div class="panel-heading">
+          <h3 class="align-center">Controls</h3>
+        </div>
+        <div class="padded">
+          <h4>Adjust text size</h4>
+          <div id="slider-wrapper">
+            <div id="slider">
+              <div id="fontsize"></div>
+            </div>
+            <div id="fontsize-display">7px</div>
           </div>
-          <div id="fontsize-display">7px</div>
+          
+          <h4>Use your own image</h4>
+          <div id="drop-zone" class="m-b-2">
+            <p>Drop image here or select file below</p>
+            <input type="file" name="image" id="image">
+            <label for="image" class="btn">Select file</label>
+          </div>
+          <small>
+            <strong>Note:</strong> Not every image works well with this type of
+            mosaic. Images with high contrast between light and dark values and
+            few details work best. Closely-cropped portraits with the subject
+            against a dark background are ideal.
+          </small>
         </div>
-        
-        <h4>Use your own image</h4>
-        <div id="drop-zone" class="m-b-2">
-          <p>Drop image here or select file below</p>
-          <input type="file" name="image" id="image">
-          <label for="image" class="btn">Select file</label>
-        </div>
-        <small>
-          <strong>Note:</strong> Not every image works well with this type of
-          mosaic. Images with high contrast between light and dark values and
-          few details work best. Closely-cropped portraits with the subject
-          against a dark background are ideal.
-        </small>
       </div>
     </div>
-    <div id="control-btn"></div>
+    <div id="panel-buttons">
+      <div id="info-btn" class="panel-btn" data-panel="#info"></div>
+      <div id="control-btn" class="panel-btn" data-panel="#controls"></div>
+    </div>
     <div id="welcome" class="show">
       <div class="content align-center padded">
         <h1 class="align-center">RGB Mosaic <small>Exposing the RGB color model behind your digital images</small></h1>
@@ -79,8 +110,10 @@
       var slider = document.querySelector('#fontsize');
       var mosaic = document.querySelector('#mosaic');
       var controlPanel = document.querySelector('#controls');
+      var panels = document.querySelector('#panels');
       var startBtn = document.querySelector('#start-btn');
       var controlBtn = document.querySelector('#control-btn');
+      var panelBtn = document.querySelectorAll('.panel-btn');
       var fontsize = document.querySelector('#fontsize-display');
       var currentImage = null;
       var transitionEvent = detectTransitionEvent();
@@ -106,13 +139,12 @@
         processImage('images/obama-2.jpg');
       });
       
-      controlBtn.addEventListener('click', function(event) {
-        if (controlPanel.classList.contains('hide')) {
-          showPanel(controlPanel);
-        } else {
-          hidePanel(controlPanel);
-        }
-      })
+      for (var i = 0; i < panelBtn.length; i++) {
+        panelBtn[i].addEventListener('click', function(event) {
+          var p = event.target.getAttribute('data-panel');
+          showPanel(document.querySelector(p));
+        });
+      }
       
       var progressBar = new ProgressBar();
       
@@ -157,19 +189,38 @@
       }
       
       function showPanel(element) {
+        var panelsOpen = panels.classList.contains('show');
+        if (!panelsOpen) {
+          show(panels);
+        }
+        var openPanel = document.querySelector('.panel.show');
+        if (openPanel && openPanel !== element) hide(openPanel);
+        show(element);
+      }
+      
+      function show(element) {
         element.classList.remove('hide');
         setTimeout(function() {
           element.classList.add('show');
-        }, 100);
+        }, 10);
       }
       
       function hidePanel(element) {
-        element.classList.remove('show');
+        var panelsOpen = panels.classList.contains('show');
+        if (element && panelsOpen) {
+          hide(panels);
+          return;
+        }
+        hide(element);
+      }
+      
+      function hide(element) {
         function transitionEndHandler(event) {
           element.classList.add('hide');
           element.removeEventListener(transitionEvent, transitionEndHandler);
         };
         element.addEventListener(transitionEvent, transitionEndHandler);
+        element.classList.remove('show');
       }
       
       function fadeOut(element, time) {
