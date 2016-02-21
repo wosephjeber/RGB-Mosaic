@@ -156,7 +156,7 @@
       
       new DropZone('#drop-zone', function(event) {
         var reader = new FileReader();
-        hidePanel(controlPanel);
+        hidePanel();
         progressBar.show();
         
         reader.addEventListener('load', function(event) {
@@ -213,11 +213,12 @@
       
       function hidePanel(element) {
         var panelsOpen = panels.classList.contains('show');
+        
         if (!element && panelsOpen) {
-          hide(panels);
-          return;
+          hide(panels); 
         }
-        hide(element);
+        
+        if (element) hide(element);
       }
       
       function hide(element) {
