@@ -45,6 +45,10 @@ p:first-child {
   margin-top: 0;
 }
 
+p:last-child {
+  margin-bottom: 0;
+}
+
 h1 {
   font-size: 3em;
   font-family: 'Merriweather', serif;
@@ -417,4 +421,19 @@ body.no-scroll {
   left: 0;
   height: 100%;
   background-color: #2ec97b;
+}
+
+/**** Compatability alert ****/
+
+.compatibility-alert {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  padding: 20px;
+  background-color: #ff7f00;
+  color: #fff;
+  font-size: .875em;
+  text-align: center;
 }
