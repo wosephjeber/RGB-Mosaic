@@ -2,7 +2,6 @@
  * Copyright (c) 2016 Joe Weber 
  */
 
-@charset "UTF-8";
 /*****************/
 /**** General ****/
 /*****************/
@@ -73,8 +72,7 @@ body.no-scroll { overflow: hidden; }
 
 #info-btn { background-image: url("../images/info-icon.png"); }
 
-#close-btn { text-align: center; line-height: 30px; font-weight: bold; font-size: 20px; position: fixed; top: 10px; display: none; }
-#close-btn:before { content: '×'; }
+#close-btn { background-image: url("../images/close-icon.png"); position: fixed; top: 10px; display: none; }
 
 #panels.show + #panel-buttons { right: 310px; }
 #panels.show + #panel-buttons #close-btn { display: block; }

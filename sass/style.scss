@@ -192,17 +192,10 @@ body.no-scroll {
 }
 
 #close-btn {
-  text-align: center;
-  line-height: 30px;
-  font-weight: bold;
-  font-size: 20px;
+  background-image :url('../images/close-icon.png');
   position: fixed;
   top: 10px;
   display: none;
-  
-  &:before {
-    content: '×';
-  }
 }
 
 #panels.show + #panel-buttons {
