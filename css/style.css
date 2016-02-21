@@ -104,6 +104,8 @@ body.no-scroll { overflow: hidden; }
 /****************/
 /**** Mosaic ****/
 /****************/
+#mosaic-wrapper { position: absolute; top: 0; left: 0; right: 0; height: 100%; overflow: scroll; }
+
 #mosaic { font-size: 7px; margin-left: auto; margin-right: auto; display: none; }
 
 .pixel { float: left; font-family: monospace; text-align: center; font-size: 1em; font-weight: bold; line-height: 1; width: 3em; height: 3em; }

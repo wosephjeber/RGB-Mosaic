@@ -304,6 +304,15 @@ body.no-scroll {
 /**** Mosaic ****/
 /****************/
 
+#mosaic-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  overflow: scroll;
+}
+
 #mosaic {
   font-size: 7px;
   margin-left: auto;
