@@ -191,8 +191,26 @@ body.no-scroll {
   background-image: url('../images/info-icon.png');
 }
 
+#close-btn {
+  text-align: center;
+  line-height: 30px;
+  font-weight: bold;
+  font-size: 20px;
+  position: fixed;
+  top: 10px;
+  display: none;
+  
+  &:before {
+    content: '×';
+  }
+}
+
 #panels.show + #panel-buttons {
   right: 310px;
+  
+  #close-btn {
+    display: block;
+  }
 }
 
 #panels {
@@ -228,24 +246,6 @@ body.no-scroll {
   &.show {
     opacity: 1;
   }
-}
-
-#panels + .close {
-  position: fixed;
-  top: 0;
-  right: 10px;
-  color: #fff;
-  font-size: 20px;
-  display: none;
-  
-  &:before {
-    content: '×';
-  }
-}
-
-#panels.show + .close {
-  right: 310px;
-  display: block;
 }
 
 #welcome {

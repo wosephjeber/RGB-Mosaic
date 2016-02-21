@@ -33,8 +33,8 @@
           </p>
           <p>
             Scroll through the mosaic to the left, and step away from your screen
-            to see the red, green, and blue text start to resolve into distinc color
-            of each pixel.
+            to see the red, green, and blue text start to resolve into the distinct
+            colors of each pixel.
           </p>
           <p>
             This mosaic works best on a larger screen (the bigger the better),
@@ -75,6 +75,7 @@
       </div>
     </div>
     <div id="panel-buttons">
+      <div id="close-btn" class="panel-btn"></div>
       <div id="info-btn" class="panel-btn" data-panel="#info"></div>
       <div id="control-btn" class="panel-btn" data-panel="#controls"></div>
     </div>
@@ -114,6 +115,7 @@
       var startBtn = document.querySelector('#start-btn');
       var controlBtn = document.querySelector('#control-btn');
       var panelBtn = document.querySelectorAll('.panel-btn');
+      var closeBtn = document.querySelector('#close-btn');
       var fontsize = document.querySelector('#fontsize-display');
       var currentImage = null;
       var transitionEvent = detectTransitionEvent();
@@ -142,9 +144,13 @@
       for (var i = 0; i < panelBtn.length; i++) {
         panelBtn[i].addEventListener('click', function(event) {
           var p = event.target.getAttribute('data-panel');
-          showPanel(document.querySelector(p));
+          if (p) showPanel(document.querySelector(p));
         });
       }
+      
+      closeBtn.addEventListener('click', function(event) {
+        hidePanel();
+      });
       
       var progressBar = new ProgressBar();
       
@@ -207,7 +213,7 @@
       
       function hidePanel(element) {
         var panelsOpen = panels.classList.contains('show');
-        if (element && panelsOpen) {
+        if (!element && panelsOpen) {
           hide(panels);
           return;
         }
