@@ -1,8 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './styles/style.scss';
+import {Provider} from 'react-redux';
+import * as Store from 'app/store';
+import 'app/styles/style.scss';
+import RGBMosaic from 'app/containers/rgb_mosaic';
+
+const store = Store.create();
 
 ReactDOM.render(
-  <div>Hello world</div>,
+  <Provider store={store}>
+    <RGBMosaic />
+  </Provider>,
   document.querySelector('#app')
 )
