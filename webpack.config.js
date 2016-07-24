@@ -39,6 +39,13 @@ module.exports = {
     ]
   },
 
+  resolve: {
+    alias: {
+      app: path.join(__dirname, "app")
+    },
+    extensions: ["", ".js", ".jsx", ".coffee"]
+  },
+
   postcss: function() {
     return [autoprefixer]
   },
