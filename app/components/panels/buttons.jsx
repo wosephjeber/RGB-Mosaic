@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 
 const PanelButtons = (props) => {
   function changePanel(panel) {
@@ -7,11 +8,21 @@ const PanelButtons = (props) => {
     }
   }
 
+  function panelButton(panel) {
+    let className = classnames('panel-btn', `btn-${panel}`, {
+      'active': props.activePanel === panel
+    });
+
+    return (
+      <div className={className} onClick={changePanel(panel)}></div>
+    )
+  }
+
   return (
     <div className="panel-buttons">
       <div className="panel-btn btn-close" onClick={props.closePanel}></div>
-      <div className="panel-btn btn-info" onClick={changePanel('info')}></div>
-      <div className="panel-btn btn-control" onClick={changePanel('control')}></div>
+      {panelButton('info')}
+      {panelButton('control')}
     </div>
   )
 }

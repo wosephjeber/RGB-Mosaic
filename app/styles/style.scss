@@ -214,6 +214,11 @@ body.no-scroll {
     visibility: visible;
     transition-delay: .3s;
   }
+
+  .panel-btn.active {
+    cursor: default;
+    background-color: $green;
+  }
 }
 
 .panels {
