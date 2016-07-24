@@ -1,6 +1,8 @@
 import React from 'react';
 
-const ControlPanel = () => {
+const ControlPanel = (props) => {
+  let {fontSize, imageWidth} = props.settings;
+
   return (
     <div className="panel panel-control">
       <div className="panel-heading">
@@ -8,7 +10,12 @@ const ControlPanel = () => {
       </div>
       <div className="padded">
         <h4>Adjust text size</h4>
-        <div>Slider will go here</div>
+        <input type="range" min="5" max="15" defaultValue={fontSize} onMouseUp={props.onFontSizeChange} />
+        <span>{fontSize}</span>
+
+        <h4>Adjust image width</h4>
+        <input type="range" min="50" max="400" defaultValue={imageWidth} onMouseUp={props.onImageWidthChange} />
+        <span>{imageWidth}</span>
 
         <h4>Use your own image</h4>
         <div id="drop-zone" className="m-b-2">

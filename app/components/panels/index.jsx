@@ -1,5 +1,5 @@
 import React from 'react';
-import ControlPanel from 'app/components/panels/control';
+import ControlPanel from 'app/containers/control_panel';
 import InfoPanel from 'app/components/panels/info';
 import classnames from 'classnames';
 

@@ -71,18 +71,21 @@ class Mosaic extends React.Component {
   }
 
   componentDidMount() {
-    this.renderCanvas()
+    this.renderCanvas();
   }
 
-  componentWillReceiveProps(newProps) {
-    if (!isEqual(newProps, this.props)) {
-      this.renderCanvas();
-      return false;
-    }
+  componentDidUpdate() {
+    this.renderCanvas();
+  }
+
+  shouldComponentUpdate(newProps) {
+    return isEqual(newProps, this.props) ? false : true;
   }
 
   renderCanvas() {
     let {image, imageWidth, fontSize} = this.props.settings;
+
+    if (!image) return;
 
     resizeImage(image, imageWidth).then((resizedImage) => {
       getPixelData(resizedImage).then((imageData) => {

@@ -12,13 +12,14 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     changePanel: (panel) => {
-      dispatch({type: 'CHANGE_PANEL', panel: panel});
+      dispatch({ type: 'CHANGE_PANEL', panel: panel });
     },
     closePanel: () => {
-      dispatch({type: 'CLOSE_PANEL'});
+      dispatch({ type: 'CLOSE_PANEL' });
     },
     hideWelcomePanel: () => {
-      dispatch({type: 'HIDE_WELCOME'});
+      dispatch({ type: 'HIDE_WELCOME' });
+      dispatch({ type: 'CHANGE_IMAGE', image: 'app/images/obama-2.jpg' })
     }
   }
 }

@@ -3,7 +3,7 @@ import {assign} from 'lodash';
 const defaultState = {
   fontSize: 7,
   imageWidth: 100,
-  image: 'app/images/obama-2.jpg'
+  image: null
 }
 
 export default (state = defaultState, action = {}) => {
