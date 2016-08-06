@@ -5,7 +5,11 @@ const mapStateToProps = (state, ownProps) => {
   return {
     sidePanel: state.sidePanel,
     settings: state.settings,
-    welcome: state.welcome
+    welcome: state.welcome,
+    downloadImage: () => {
+      console.log('downloading image');
+      window.open(state.output);
+    }
   }
 }
 
@@ -20,6 +24,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     hideWelcomePanel: () => {
       dispatch({ type: 'HIDE_WELCOME' });
       dispatch({ type: 'CHANGE_IMAGE', image: 'app/images/obama-2.jpg' })
+    },
+    onRender: (image) => {
+      dispatch({ type: 'OUTPUT_RENDERED', output: image });
     }
   }
 }

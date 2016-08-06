@@ -108,7 +108,7 @@ class Mosaic extends React.Component {
       context.fillText(b, x * pixelDimension, y * pixelDimension + fontSize * 2);
     }
 
-    let {fontSize} = this.props.settings
+    let fontSize = this.props.settings.fontSize * 2;
 
     let context = this._canvas.getContext('2d');
     let imageHeight = rows.length;
@@ -117,6 +117,7 @@ class Mosaic extends React.Component {
 
     this._canvas.width = imageWidth * pixelDimension;
     this._canvas.height = imageHeight * pixelDimension;
+    this._canvas.style.width = imageWidth * pixelDimension / 2 + 'px';
 
     context.font = `${fontSize}px monospace`;
     context.textBaseline = 'top';
@@ -126,7 +127,9 @@ class Mosaic extends React.Component {
       row.map((pixel, x) => {
         drawPixel(pixel, x, y);
       })
-    })
+    });
+
+    this.props.onRender(this._canvas.toDataURL('image/jpeg', '1'));
   }
 
   render() {

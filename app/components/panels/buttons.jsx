@@ -23,6 +23,7 @@ const PanelButtons = (props) => {
       <div className="panel-btn btn-close" onClick={props.closePanel}></div>
       {panelButton('info')}
       {panelButton('control')}
+      <div className="panel-btn btn-download" onClick={props.downloadImage}></div>
     </div>
   )
 }

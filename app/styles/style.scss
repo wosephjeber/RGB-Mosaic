@@ -197,13 +197,17 @@ body.no-scroll {
 }
 
 .btn-close {
-  background-image :url('../images/close-icon.png');
+  background-image: url('../images/close-icon.png');
   position: fixed;
   top: 10px;
   opacity: 0;
   visibility: hidden;
   transition: opacity .3s, visibility .3s;
   transition-delay: 0s;
+}
+
+.btn-download {
+  background-image: url('../images/download-icon.png');
 }
 
 .panels.open + .panel-buttons {
