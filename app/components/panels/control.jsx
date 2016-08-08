@@ -1,4 +1,5 @@
 import React from 'react';
+import Slider from 'app/components/slider';
 
 const ControlPanel = (props) => {
   let {fontSize, imageWidth} = props.settings;
@@ -10,12 +11,10 @@ const ControlPanel = (props) => {
       </div>
       <div className="padded">
         <h4>Adjust text size</h4>
-        <input type="range" min="5" max="15" defaultValue={fontSize} onMouseUp={props.onFontSizeChange} />
-        <span>{fontSize}</span>
+        <Slider value={fontSize} onChange={props.onFontSizeChange} min="5" max="15" />
 
         <h4>Adjust image width</h4>
-        <input type="range" min="50" max="400" defaultValue={imageWidth} onMouseUp={props.onImageWidthChange} />
-        <span>{imageWidth}</span>
+        <Slider value={imageWidth} onChange={props.onImageWidthChange} min="50" max="400" />
 
         <h4>Use your own image</h4>
         <div id="drop-zone" className="m-b-2">

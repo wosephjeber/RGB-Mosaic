@@ -329,25 +329,18 @@ body.no-scroll {
 /**** Controls ****/
 /******************/
 
-#slider-wrapper {
-  position: relative;
+.slider {
+  display: flex;
+  align-items: center;
 
-  #slider {
-    padding-right: 60px;
+  .slider-range {
+    flex-grow: 1;
   }
 
-  #fontsize {
-    width: 100%;
-  }
-
-  #fontsize-display {
-    width: 40px;
-    position: absolute;
-    right: 0;
-    top: 0;
-    font-weight: bold;
-    line-height: 18px;
-    text-align: right;
+  .slider-input {
+    flex-grow: 1;
+    margin-left: 1em;
+    width: 2em;
   }
 }
 
